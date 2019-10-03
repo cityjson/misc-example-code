@@ -1,17 +1,28 @@
 
+###############################################################################
+# The file should be in the /extensions folder of the schemas of CityJSON
+#
+# And the meta-schema file "extension.schema.json" should be in that folder too
+###############################################################################
+
 import os
 import sys
 import json
 import jsonschema
 import jsonref
 
-metaschemapath = '/Users/hugo/projects/nl3d/schemas/extensions/extension.schema.json'
-jmeta = json.loads(open(metaschemapath).read())
-
-schemapath = '/Users/hugo/projects/nl3d/schemas/extensions/nl_3d.json'
-js = json.loads(open(schemapath).read())
 
 def main():
+    if len(sys.argv) != 2:
+        print("You need to give the path of the CityJSON_Extension file.\nAbort.")
+        sys.exit()
+
+    schemapath = os.path.abspath(sys.argv[1])
+    js = json.loads(open(schemapath).read())
+
+    metaschemapath = os.path.dirname(schemapath) + '/extension.schema.json'
+    jmeta = json.loads(open(metaschemapath).read())
+
     #-- 1. validation against the extension schema ("meta")
     try:
         jsonschema.validate(js, jmeta)
