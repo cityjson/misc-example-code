@@ -12,4 +12,4 @@ parser = etree.XMLParser(remove_blank_text=True)
 tree = etree.parse(fin, parser)
 root = tree.getroot()   
 
-sys.stdout.write(etree.tostring(root, pretty_print=False, xml_declaration=True, encoding="UTF-8"))
+sys.stdout.write(str(etree.tostring(root, pretty_print=False, xml_declaration=True, encoding="UTF-8")))
